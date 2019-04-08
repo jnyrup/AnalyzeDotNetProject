@@ -31,7 +31,7 @@ namespace AnalyzeDotNetProject
                     {
                         foreach(var dependency in targetFramework.Dependencies)
                         {
-                            var projectLibrary = lockFileTargetFramework.Libraries.FirstOrDefault(library => library.Name == dependency.Name);
+                            var projectLibrary = lockFileTargetFramework.Libraries.First(library => string.Equals(library.Name, dependency.Name, StringComparison.OrdinalIgnoreCase));
 
                             ReportDependency(projectLibrary, lockFileTargetFramework, 1);
                         }
@@ -47,7 +47,7 @@ namespace AnalyzeDotNetProject
 
             foreach (var childDependency in projectLibrary.Dependencies)
             {
-                var childLibrary = lockFileTargetFramework.Libraries.FirstOrDefault(library => library.Name == childDependency.Id);
+                var childLibrary = lockFileTargetFramework.Libraries.First(library => string.Equals(library.Name, childDependency.Id, StringComparison.OrdinalIgnoreCase));
 
                 ReportDependency(childLibrary, lockFileTargetFramework, indentLevel + 1);
             }
